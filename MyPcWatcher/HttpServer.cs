@@ -12,6 +12,8 @@ namespace MyPcWatcher
 {
     public class HttpServer
     {
+        Dictionary<string, string> ResponseText= new Dictionary<string, string>();
+        string responseText = "";
         Form1 form = new Form1();
         Commands commands = new Commands();
         public enum CommandsType
@@ -72,6 +74,11 @@ namespace MyPcWatcher
                     {
                         DateTime TimeToTick = DateTime.Parse(s.Parameter);
                         TimerStart(TimeToTick);
+                        ResponseText = new Dictionary<string, string>();
+                        ResponseText.Add("response", "Timer Tick on:" + TimeToTick.Hour.ToString() + ":" + TimeToTick.Minute.ToString());
+                       var js =  JsonConvert.SerializeObject(ResponseText, Formatting.Indented);
+                        responseText= js;
+
                     }
                     if(s.Command == 2) 
                     { 
@@ -87,17 +94,7 @@ namespace MyPcWatcher
                     }
                 }
                 var response = context.Response;
-                string responseText =
-        @"<!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset='utf8'>
-            <title>METANIT.COM</title>
-        </head>
-        <body>
-            <h2>Hello METANIT.COM</h2>
-        </body>
-    </html>";
+                
                 byte[] buffer = Encoding.UTF8.GetBytes(responseText);
                 // получаем поток ответа и пишем в него ответ
                 response.ContentLength64 = buffer.Length;

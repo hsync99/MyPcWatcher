@@ -52,7 +52,11 @@ namespace MyPcWatcher
 
         private void button2_Click(object sender, EventArgs e)
         {
-           tickTime = tickTime.AddMinutes(15);
+           tickTime = tickTime.AddMinutes(1);
+            this.Hide();
+            timer1.Stop();
+            timer1.Dispose();
+            StartTimer();
         }
 
        private void Shutdown()

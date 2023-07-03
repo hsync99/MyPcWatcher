@@ -14,7 +14,8 @@ namespace MyPcWatcher
             //
             HttpServer server = new HttpServer();
             server.ServerStart();
-            Application.Run(new Form1());
+           // Application.Run(new Form1());
+            Application.Run();
 
         }
     }
