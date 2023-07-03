@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MyPcWatcher
 {
-    public class HttpServer:Form1
+    public class HttpServer
     {
-     
+        Form1 form = new Form1();
         Commands commands = new Commands();
         public enum CommandsType
         {
@@ -79,11 +79,11 @@ namespace MyPcWatcher
                     }
                     if(s.Command == 3)
                     {
-                        this.ShowPopup(s.Parameter);
+                        form.ShowPopup(s.Parameter);
                     }
                     if(s.Command == 4)
                     {
-                        this.ApplicationExit();
+                        form.ApplicationExit();
                     }
                 }
                 var response = context.Response;
@@ -116,25 +116,11 @@ namespace MyPcWatcher
 
         public void TimerStart(DateTime time)
         {
-            this.tickTime= time;
-            this.StartTimer();
+            form.tickTime= time;
+            form.StartTimer();
         }
 
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // HttpServer
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.ClientSize = new System.Drawing.Size(624, 381);
-            this.Name = "HttpServer";
-            this.TopMost = true;
-            this.Load += new System.EventHandler(this.HttpServer_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
-        }
+       
 
         private void HttpServer_Load(object sender, EventArgs e)
         {
