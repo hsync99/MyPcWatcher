@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Management;
 using System.Net;
 using System.Text;
@@ -92,6 +93,11 @@ namespace MyPcWatcher
             MessageBox.Show(Message, "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.None,
      MessageBoxDefaultButton.Button1, (MessageBoxOptions)0x40000);
             
+        }
+        public void ApplicationExit()
+        {
+            Process.GetCurrentProcess().Kill();
+            Application.Exit();
         }
     }
 }

@@ -83,7 +83,7 @@ namespace MyPcWatcher
                     }
                     if(s.Command == 4)
                     {
-
+                        this.ApplicationExit();
                     }
                 }
                 var response = context.Response;
@@ -118,6 +118,27 @@ namespace MyPcWatcher
         {
             this.tickTime= time;
             this.StartTimer();
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // HttpServer
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.ClientSize = new System.Drawing.Size(624, 381);
+            this.Name = "HttpServer";
+            this.TopMost = true;
+            this.Load += new System.EventHandler(this.HttpServer_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        private void HttpServer_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
