@@ -80,15 +80,15 @@ namespace MyPcWatcher
                         responseText= js;
 
                     }
-                    if(s.Command == 2) 
+                    else if(s.Command == 2) 
                     { 
 
                     }
-                    if(s.Command == 3)
+                    else if(s.Command == 3)
                     {
                         form.ShowPopup(s.Parameter);
                     }
-                    if(s.Command == 4)
+                    else if(s.Command == 4)
                     {
                         form.ApplicationExit();
                     }
