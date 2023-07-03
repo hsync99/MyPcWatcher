@@ -4,13 +4,23 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace MyPcWatcher
 {
     public class HttpServer:Form1
     {
-        
+     
+        Commands commands = new Commands();
+        public enum CommandsType
+        {
+            SetTime = 1,
+            ShutDown = 2,
+            Notify = 3,
+            Quit = 4,
+        }
         string Protocol = "http://";
         string IpAddress = "";
         int Port = 8888;
@@ -48,6 +58,34 @@ namespace MyPcWatcher
             {
                 var context = await server.GetContextAsync();
                 var request = context.Request;
+
+                string text;
+                using (var reader = new StreamReader(request.InputStream,
+                                                     request.ContentEncoding))
+                {
+                    text = reader.ReadToEnd();
+                }
+                if (!String.IsNullOrEmpty(text) && !String.IsNullOrWhiteSpace(text)) 
+                {
+                 var  s=  JsonConvert.DeserializeObject<Commands>(text.ToString());
+                    if(s.Command == 1)
+                    {
+                        DateTime TimeToTick = DateTime.Parse(s.Parameter);
+                        TimerStart(TimeToTick);
+                    }
+                    if(s.Command == 2) 
+                    { 
+
+                    }
+                    if(s.Command == 3)
+                    {
+                        this.ShowPopup(s.Parameter);
+                    }
+                    if(s.Command == 4)
+                    {
+
+                    }
+                }
                 var response = context.Response;
                 string responseText =
         @"<!DOCTYPE html>
@@ -68,12 +106,18 @@ namespace MyPcWatcher
                 await output.WriteAsync(buffer);
                 await output.FlushAsync();
                 //MessageBox.Show("Привет зайка");
-                this.Show();
-                this.TopMost= true; 
+               // this.Show();
+               // this.TopMost= true; 
                // form.ShowDialog();
             }
 
 
+        }
+
+        public void TimerStart(DateTime time)
+        {
+            this.tickTime= time;
+            this.StartTimer();
         }
     }
 }
