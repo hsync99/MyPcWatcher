@@ -38,7 +38,7 @@ namespace MyPcWatcher
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                if (ip.AddressFamily == AddressFamily.InterNetwork && ip.ToString().Contains("192"))
                 {
                     return ip.ToString();
                 }
@@ -86,10 +86,28 @@ namespace MyPcWatcher
                     }
                     else if(s.Command == 3)
                     {
+                        ResponseText = new Dictionary<string, string>();
+                        ResponseText.Add("response", "Message received:"+s.Parameter);
+                        var js = JsonConvert.SerializeObject(ResponseText, Formatting.Indented);
+                        responseText = js;
                         form.ShowPopup(s.Parameter);
                     }
                     else if(s.Command == 4)
                     {
+                        ResponseText = new Dictionary<string, string>();
+                        ResponseText.Add("response", "Watcher Stoped!");
+                        var js = JsonConvert.SerializeObject(ResponseText, Formatting.Indented);
+                        responseText = js;
+                        var response2 = context.Response;
+
+                        byte[] buffer2 = Encoding.UTF8.GetBytes(responseText);
+                        // получаем поток ответа и пишем в него ответ
+                        response2.ContentLength64 = buffer2.Length;
+                        using Stream output2 = response2.OutputStream;
+                        // отправляем данные
+                        await output2.WriteAsync(buffer2);
+                        await output2.FlushAsync();
+                        await Task.Delay(1000);
                         form.ApplicationExit();
                     }
                 }
@@ -119,9 +137,6 @@ namespace MyPcWatcher
 
        
 
-        private void HttpServer_Load(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }
