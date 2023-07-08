@@ -28,8 +28,8 @@ namespace MyPcWatcher
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.ShowDialog();
-            this.ShowInTaskbar = true;
+            
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

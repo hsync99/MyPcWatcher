@@ -15,8 +15,11 @@ namespace MyPcWatcher
             HttpServer server = new HttpServer();
             server.ServerStart();
            // Application.Run(new Form1());
+           //InitializationClass init = new InitializationClass();
+           // init.SetAutoRunValue(true, Application.ExecutablePath);
             Application.Run();
 
         }
+
     }
 }
